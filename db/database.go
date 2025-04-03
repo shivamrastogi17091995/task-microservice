@@ -3,6 +3,7 @@ package db
 import (
 	"log"
 	"os"
+	"task-microservice/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,4 +18,5 @@ func InitDB() {
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}
+	DB.AutoMigrate(&models.Task{})
 }
