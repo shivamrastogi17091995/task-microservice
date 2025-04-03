@@ -18,5 +18,6 @@ func InitDB() {
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}
+	DB.Exec("CREATE TYPE task_status AS ENUM('PENDING', 'COMPLETED');")
 	DB.AutoMigrate(&models.Task{})
 }

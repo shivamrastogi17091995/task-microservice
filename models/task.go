@@ -13,5 +13,5 @@ type Task struct {
 	gorm.Model
 	Title       string
 	Description string
-	Status      TaskStatus `gorm:"type:enum('PENDING', 'COMPLETED');default:'PENDING'"`
+	Status      TaskStatus `gorm:"type:task_status;default:'PENDING'"`
 }
