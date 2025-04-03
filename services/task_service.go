@@ -9,6 +9,10 @@ func CreateTask(task models.Task) (models.Task, error) {
 	return repository.CreateTask(task)
 }
 
+func GetTask(id uint) (models.Task, error) {
+	return repository.GetTask(id)
+}
+
 func UpdateTask(id uint, task models.Task) (models.Task, error) {
 	return repository.UpdateTask(id, task)
 }

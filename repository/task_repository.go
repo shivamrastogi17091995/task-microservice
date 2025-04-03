@@ -10,6 +10,12 @@ func CreateTask(task models.Task) (models.Task, error) {
 	return task, err
 }
 
+func GetTask(id uint) (models.Task, error) {
+	var task models.Task
+	err := db.DB.First(&task, id).Error
+	return task, err
+}
+
 func UpdateTask(id uint, updatedData models.Task) (models.Task, error) {
 	var task models.Task
 	err := db.DB.First(&task, id).Error

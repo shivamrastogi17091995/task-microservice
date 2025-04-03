@@ -23,6 +23,16 @@ func CreateTask(c *gin.Context) {
 	c.JSON(http.StatusCreated, newTask)
 }
 
+func GetTask(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	task, err := services.GetTask(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Task not found"})
+		return
+	}
+	c.JSON(http.StatusOK, task)
+}
+
 func UpdateTask(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	var task models.Task
