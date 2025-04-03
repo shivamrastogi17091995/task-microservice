@@ -1,0 +1,12 @@
+# Binaries
+*.exe
+*.out
+*.app
+
+# Dependencies
+vendor/
+bin/
+
+# Go-specific files
+go.sum
+go.work
