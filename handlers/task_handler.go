@@ -47,3 +47,13 @@ func UpdateTask(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, updatedTask)
 }
+
+func DeleteTask(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := services.DeleteTask(uint(id))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete task"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Task deleted successfully"})
+}

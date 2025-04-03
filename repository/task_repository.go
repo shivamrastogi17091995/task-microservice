@@ -28,3 +28,7 @@ func UpdateTask(id uint, updatedData models.Task) (models.Task, error) {
 	err = db.DB.Save(&task).Error
 	return task, err
 }
+
+func DeleteTask(id uint) error {
+	return db.DB.Delete(&models.Task{}, id).Error
+}

@@ -16,3 +16,7 @@ func GetTask(id uint) (models.Task, error) {
 func UpdateTask(id uint, task models.Task) (models.Task, error) {
 	return repository.UpdateTask(id, task)
 }
+
+func DeleteTask(id uint) error {
+	return repository.DeleteTask(id)
+}
