@@ -8,3 +8,7 @@ import (
 func CreateTask(task models.Task) (models.Task, error) {
 	return repository.CreateTask(task)
 }
+
+func UpdateTask(id uint, task models.Task) (models.Task, error) {
+	return repository.UpdateTask(id, task)
+}
