@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 	"task-microservice/models"
 	"task-microservice/services"
 
@@ -82,4 +83,21 @@ func DeleteTask(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Task deleted successfully"})
+}
+
+func GetAllTasks(c *gin.Context) {
+	status := strings.ToUpper(c.Query("status"))
+	if status != "" && status != string(models.PENDING) && status != string(models.COMPLETED) {
+		status = ""
+	}
+	page, err := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if err != nil || page <= 0 {
+		page = 1
+	}
+	tasks, err := services.GetAllTasks(status, page, 10)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch tasks"})
+		return
+	}
+	c.JSON(http.StatusOK, tasks)
 }

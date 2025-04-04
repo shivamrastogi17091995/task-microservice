@@ -47,3 +47,13 @@ func DeleteTask(id uint) error {
 	}
 	return db.DB.Delete(&models.Task{}, id).Error
 }
+
+func GetAllTasks(status string, limit, offset int) ([]models.Task, error) {
+	var tasks []models.Task
+	query := db.DB.Order("id asc").Limit(limit).Offset(offset)
+	if status != "" {
+		query = query.Where("status = ?", status)
+	}
+	err := query.Find(&tasks).Error
+	return tasks, err
+}

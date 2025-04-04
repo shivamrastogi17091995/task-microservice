@@ -20,3 +20,8 @@ func UpdateTask(id uint, task models.Task) (models.Task, error) {
 func DeleteTask(id uint) error {
 	return repository.DeleteTask(id)
 }
+
+func GetAllTasks(status string, page, pageSize int) ([]models.Task, error) {
+	offset := (page - 1) * pageSize
+	return repository.GetAllTasks(status, pageSize, offset)
+}
