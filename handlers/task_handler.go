@@ -12,6 +12,16 @@ import (
 	"gorm.io/gorm"
 )
 
+// @Summary Create a new task
+// @Description Add a new task to the system
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param task body models.Task true "Task details"
+// @Success 201 {object} models.Task
+// @Failure 400 {object} map[string]any
+// @Failure 500 {object} map[string]any
+// @Router /tasks [post]
 func CreateTask(c *gin.Context) {
 	var task models.Task
 	if err := c.ShouldBindJSON(&task); err != nil {
@@ -26,6 +36,17 @@ func CreateTask(c *gin.Context) {
 	c.JSON(http.StatusCreated, newTask)
 }
 
+// @Summary Get a task by ID
+// @Description Retrieve details of a specific task using its ID
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param id path int true "Task ID"
+// @Success 200 {object} models.Task
+// @Failure 400 {object} map[string]any
+// @Failure 404 {object} map[string]any
+// @Failure 500 {object} map[string]any
+// @Router /tasks/{id} [get]
 func GetTask(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id <= 0 {
@@ -44,6 +65,18 @@ func GetTask(c *gin.Context) {
 	c.JSON(http.StatusOK, task)
 }
 
+// @Summary Update a task
+// @Description Modify an existing task's details
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param id path int true "Task ID"
+// @Param task body models.Task true "Updated task details"
+// @Success 200 {object} models.Task
+// @Failure 400 {object} map[string]any
+// @Failure 404 {object} map[string]any
+// @Failure 500 {object} map[string]any
+// @Router /tasks/{id} [put]
 func UpdateTask(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id <= 0 {
@@ -67,6 +100,17 @@ func UpdateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, updatedTask)
 }
 
+// @Summary Delete a task
+// @Description Remove a task from the system
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param id path int true "Task ID"
+// @Success 200 {object} map[string]any
+// @Failure 400 {object} map[string]any
+// @Failure 404 {object} map[string]any
+// @Failure 500 {object} map[string]any
+// @Router /tasks/{id} [delete]
 func DeleteTask(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id <= 0 {
@@ -85,6 +129,16 @@ func DeleteTask(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Task deleted successfully"})
 }
 
+// @Summary Get all tasks
+// @Description Retrieve all tasks with optional filtering and pagination
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param status query string false "Filter by task status (e.g., Pending, Completed)"
+// @Param page query int false "Page number (default: 1)"
+// @Success 200 {array} models.Task
+// @Failure 500 {object} map[string]any
+// @Router /tasks [get]
 func GetAllTasks(c *gin.Context) {
 	status := strings.ToUpper(c.Query("status"))
 	if status != "" && status != string(models.PENDING) && status != string(models.COMPLETED) {
