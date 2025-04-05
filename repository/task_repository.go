@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"strings"
 	"task-microservice/db"
 	"task-microservice/models"
 	"time"
@@ -32,8 +33,8 @@ func UpdateTask(id uint, updatedData models.Task) (models.Task, error) {
 	}
 	task.Title = updatedData.Title
 	task.Description = updatedData.Description
-	if task.Status == models.PENDING && updatedData.Status == models.COMPLETED {
-		task.Status = updatedData.Status
+	if task.Status == models.PENDING && strings.ToUpper(string(updatedData.Status)) == string(models.COMPLETED) {
+		task.Status = models.COMPLETED
 	}
 	err = db.DB.Save(&task).Error
 	return task, err
